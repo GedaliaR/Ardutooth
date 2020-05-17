@@ -217,12 +217,13 @@ public class Ardutooth {
      * from the Arduino, casts it into a {@link char}, and returns it.
      *
      * @return char value read
+     * @see BufferedReader
      */
-    public char receiveChar(){
+    public char receiveChar() {
         char c = 0;
         if (mBtHandler.getSocket() != null)
             try {
-               c = (char) mBtHandler.getInputReader().read();
+                c = (char) mBtHandler.getInputReader().read();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -233,8 +234,9 @@ public class Ardutooth {
      * Reads a line, as defined by {@link BufferedReader}'s readLine method, from the Arduino.
      *
      * @return {@link String} line read
+     * @see BufferedReader
      */
-    public String receiveLine(){
+    public String receiveLine() {
         String result = "";
         if (mBtHandler.getSocket() != null)
             try {
@@ -243,6 +245,22 @@ public class Ardutooth {
                 ex.printStackTrace();
             }
         return result;
+    }
+
+    /**
+     * Checks if the underlying BufferedReader is ready, as defined by {@link BufferedReader}'s ready method
+     *
+     * @return
+     * @see BufferedReader
+     */
+    public boolean isReady() {
+        if (mBtHandler.getSocket() != null)
+            try {
+                return mBtHandler.getInputReader().ready();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return false;
     }
 
 }
